@@ -1,0 +1,117 @@
+#: import hex kivy.utils.get_color_from_hex
+
+<P>:
+    title: 'Erro!'
+    size_hint: None, None
+    size: (400, 200)
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text: 'O campo não pode ser vazio'
+        Button:
+            size_hint: None, None
+            size: (50, 50)
+            id: bt_ok
+            text:'OK'
+            on_press: root.cancel()
+
+<TaskComplete>:
+    height: 60
+    size_hint_y: None
+
+    Label:
+        id: label_c
+        text:''
+    
+    CheckBox:
+        id: check_c
+        active: True
+        on_active: root.on_checkbox_deactive(self.active, label_c.text)
+    
+    Button:
+        background_color: hex('#EE82EE')
+        id: btn_c
+        size_hint_x: .2
+        text: '-'
+        on_press: root.remove()
+
+<TodoList>:
+    height: 60
+    size_hint_y: None
+    Label:
+        id:label1
+        text: ''
+
+    CheckBox:
+        id: checkbox1
+        color: hex('#FFFFE0')
+        on_active: root.on_checkbox_active(self.active, label1.text)
+    
+    Button:
+        background_color: hex('#EE82EE')
+        id: remove
+        text: '-'
+        size_hint_x: .2
+        on_press: root.remove()
+
+<MainTodo>
+    orientation:'vertical'
+    padding:20
+    canvas.before:
+        Color: 
+            rgba: hex('#FF6347')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    GridLayout:
+        rows: 1
+        cols: 2
+        size_hint_y: .12
+        padding: 20
+
+        TextInput:
+            size_hint_x: .4
+            id: todo
+            hint_text:'O que deseja fazer?'
+
+        Button:
+            size_hint_x: .1
+            text:'+'
+            on_press: root.add_todo(todo.text)
+            
+    TabbedPanel:
+        do_default_tab: False
+        TabbedPanelItem:
+            text: 'Incompletas'
+            ScrollView:
+                canvas.before:
+                    Color:
+                        rgba: hex('#2F4F4F')
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                GridLayout:
+                    cols: 1
+                    size_hint_y: .8
+                    do_scroll_y: True
+                    id: principal
+                    padding: 10
+        
+        TabbedPanelItem:
+            text: 'Completadas'
+            ScrollView:
+                canvas.before:
+                    Color:
+                        rgba: hex('#4B0082')
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                GridLayout:
+                    cols: 1
+                    size_hint_y: .8
+                    do_scroll_y: True
+                    id: complete
+                    padding: 10
